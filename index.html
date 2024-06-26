@@ -9,23 +9,6 @@
           crossorigin=""/>
     <style>
         #map { height: 700px; }
-
-        /* Custom Marker Styles */
-        .orange-marker {
-            background-color: orange;
-        }
-        
-        .blue-marker {
-            background-color: blue;
-        }
-
-        .orange-marker, .blue-marker {
-            width: 25px;
-            height: 41px;
-            display: inline-block;
-            background-size: 25px 41px;
-            background-image: url('https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png');
-        }
     </style>
 </head>
 <body>
@@ -45,20 +28,17 @@
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Function to create a custom icon with the specified class name
-    function createCustomIcon(className) {
-        return L.divIcon({
-            className: className,
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34]
-        });
-    }
+    // Default marker icon
+    var defaultMarker = L.icon({
+        iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        shadowSize: [41, 41]
+    });
 
-    var orangeMarker = createCustomIcon('orange-marker');
-    var blueMarker = createCustomIcon('blue-marker');
-
-    // By All Means cities (orange markers)
+    // By All Means cities (default markers)
     var bamCities = [
         {coords: [42.3601, -71.0589], text: 'Boston, MA'},
         {coords: [35.0456, -85.3097], text: 'Chattanooga-Hamilton County, TN'},
@@ -71,11 +51,11 @@
     ];
 
     bamCities.forEach(function(city) {
-        L.marker(city.coords, {icon: orangeMarker}).addTo(map)
+        L.marker(city.coords, {icon: defaultMarker}).addTo(map)
             .bindPopup('<b>' + city.text + '</b>');
     });
 
-    // Institute for Success Planning cities (blue markers)
+    // Institute for Success Planning cities (default markers)
     var ispCities = [
         {coords: [35.0844, -106.6504], text: 'Albuquerque, NM'},
         {coords: [35.5951, -82.5515], text: 'Asheville & Buncombe County, NC'},
@@ -103,11 +83,11 @@
     ];
 
     ispCities.forEach(function(city) {
-        L.marker(city.coords, {icon: blueMarker}).addTo(map)
+        L.marker(city.coords, {icon: defaultMarker}).addTo(map)
             .bindPopup('<b>' + city.text + '</b>');
     });
 
-    // Cities that belong to both By All Means and ISP (two markers: orange and blue)
+    // Cities that belong to both By All Means and ISP (default markers)
     var bothCities = [
         {coords: [35.0456, -85.3097], text: 'Chattanooga-Hamilton County, TN'},
         {coords: [42.3918, -71.0328], text: 'Chelsea, MA'},
@@ -116,9 +96,7 @@
     ];
 
     bothCities.forEach(function(city) {
-        L.marker(city.coords, {icon: orangeMarker}).addTo(map)
-            .bindPopup('<b>' + city.text + '</b>');
-        L.marker(city.coords, {icon: blueMarker}).addTo(map)
+        L.marker(city.coords, {icon: defaultMarker}).addTo(map)
             .bindPopup('<b>' + city.text + '</b>');
     });
     </script>
