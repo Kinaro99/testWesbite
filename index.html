@@ -25,12 +25,21 @@
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Add a marker example (optional)
-    var marker = L.marker([37.8, -96.9]).addTo(map)
-        .bindPopup('<b>Hello!</b><br>This is a marker.')
-        .openPopup();
+    // Add markers with links in the pop-ups
+    var markers = [
+        {coords: [37.8, -96.9], text: 'Central USA', link: 'https://en.wikipedia.org/wiki/Geography_of_the_United_States'},
+        {coords: [34.0522, -118.2437], text: 'Los Angeles, CA', link: 'https://en.wikipedia.org/wiki/Los_Angeles'},
+        {coords: [40.7128, -74.0060], text: 'New York, NY', link: 'https://en.wikipedia.org/wiki/New_York_City'},
+        {coords: [41.8781, -87.6298], text: 'Chicago, IL', link: 'https://en.wikipedia.org/wiki/Chicago'},
+        {coords: [29.7604, -95.3698], text: 'Houston, TX', link: 'https://en.wikipedia.org/wiki/Houston'}
+    ];
 
-    // Add a circle example (optional)
+    markers.forEach(function(marker) {
+        L.marker(marker.coords).addTo(map)
+            .bindPopup('<b>' + marker.text + '</b><br><a href="' + marker.link + '" target="_blank">Learn more</a>');
+    });
+
+    // Optional: Add a circle
     var circle = L.circle([37.8, -96.9], {
         color: 'red',
         fillColor: '#f03',
@@ -38,13 +47,8 @@
         radius: 500000
     }).addTo(map).bindPopup('I am a circle.');
 
-    // Add a polygon example (optional)
-    var polygon = L.polygon([
-        [37.8, -96.9],
-        [38.8, -97.9],
-        [37.8, -98.9]
-    ]).addTo(map).bindPopup('I am a polygon.');
     </script>
 </body>
 </html>
+
 
