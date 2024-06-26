@@ -3,14 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Map with Leaflet</title>
+    <title>EdRedesign By All Means and Institute for Success Planning Communities</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" 
           crossorigin=""/>
+    <style>
+        #map { height: 700px; }
+    </style>
 </head>
 <body>
-    <h1>Interactive Map of the United States</h1>
-    <div id="map" style="height: 500px;"></div>
+    <h1>EdRedesign By All Means and Institute for Success Planning Communities</h1>
+    <div id="map"></div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" 
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" 
@@ -25,30 +28,85 @@
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Add markers with links in the pop-ups
-    var markers = [
-        {coords: [37.8, -96.9], text: 'Central USA', link: 'https://en.wikipedia.org/wiki/Geography_of_the_United_States'},
-        {coords: [34.0522, -118.2437], text: 'Los Angeles, CA', link: 'https://en.wikipedia.org/wiki/Los_Angeles'},
-        {coords: [40.7128, -74.0060], text: 'New York, NY', link: 'https://en.wikipedia.org/wiki/New_York_City'},
-        {coords: [41.8781, -87.6298], text: 'Chicago, IL', link: 'https://en.wikipedia.org/wiki/Chicago'},
-        {coords: [29.7604, -95.3698], text: 'Houston, TX', link: 'https://en.wikipedia.org/wiki/Houston'}
-    ];
-
-    markers.forEach(function(marker) {
-        L.marker(marker.coords).addTo(map)
-            .bindPopup('<b>' + marker.text + '</b><br><a href="' + marker.link + '" target="_blank">Learn more</a>');
+    // Define custom marker icons
+    var orangeIcon = new L.Icon({
+        iconUrl: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|FFA500|000000',
+        iconSize: [21, 34],
+        iconAnchor: [10, 34],
+        popupAnchor: [1, -34]
     });
 
-    // Optional: Add a circle
-    var circle = L.circle([37.8, -96.9], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500000
-    }).addTo(map).bindPopup('I am a circle.');
+    var blueIcon = new L.Icon({
+        iconUrl: 'https://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|0000FF|000000',
+        iconSize: [21, 34],
+        iconAnchor: [10, 34],
+        popupAnchor: [1, -34]
+    });
 
+    // By All Means cities (orange markers)
+    var bamCities = [
+        {coords: [42.3601, -71.0589], text: 'Boston, MA'},
+        {coords: [35.0456, -85.3097], text: 'Chattanooga-Hamilton County, TN'},
+        {coords: [42.3918, -71.0328], text: 'Chelsea, MA'},
+        {coords: [38.2527, -85.7585], text: 'Louisville, KY'},
+        {coords: [37.8044, -122.2711], text: 'Oakland, CA'},
+        {coords: [37.7273, -89.2168], text: 'Partnership for Resilience - Carbondale & Johnson County, IL'},
+        {coords: [41.7004, -73.9210], text: 'Poughkeepsie, NY'},
+        {coords: [42.3876, -71.0995], text: 'Somerville, MA'}
+    ];
+
+    bamCities.forEach(function(city) {
+        L.marker(city.coords, {icon: orangeIcon}).addTo(map)
+            .bindPopup('<b>' + city.text + '</b>');
+    });
+
+    // Institute for Success Planning cities (blue markers)
+    var ispCities = [
+        {coords: [35.0844, -106.6504], text: 'Albuquerque, NM'},
+        {coords: [35.5951, -82.5515], text: 'Asheville & Buncombe County, NC'},
+        {coords: [39.2904, -76.6122], text: 'Baltimore, MD'},
+        {coords: [37.5680, -84.2963], text: 'Berea, KY'},
+        {coords: [33.5186, -86.8104], text: 'Birmingham, AL'},
+        {coords: [42.3736, -71.1097], text: 'Cambridge, MA'},
+        {coords: [37.7273, -89.2168], text: 'Carbondale, IL'},
+        {coords: [39.7589, -84.1916], text: 'Dayton, OH'},
+        {coords: [40.9254, -98.3420], text: 'Grand Island, NE'},
+        {coords: [33.7701, -118.1937], text: 'Long Beach, CA'},
+        {coords: [35.1495, -90.0490], text: 'Memphis, TN'},
+        {coords: [44.9778, -93.2650], text: 'Minneapolis, MN'},
+        {coords: [36.1627, -86.7816], text: 'Nashville, TN'},
+        {coords: [40.7128, -74.0060], text: 'New York City (Children\'s Aid Society), NY'},
+        {coords: [40.7128, -74.0060], text: 'New York City (Every Child & Family is Known), NY'},
+        {coords: [28.5383, -81.3792], text: 'Orlando, FL'},
+        {coords: [40.7306, -73.9352], text: 'Poughkeepsie, NY'},
+        {coords: [40.7608, -111.8910], text: 'Salt Lake City, UT'},
+        {coords: [29.4241, -98.4936], text: 'San Antonio, TX'},
+        {coords: [32.7157, -117.1611], text: 'San Diego, CA'},
+        {coords: [37.7749, -122.4194], text: 'San Francisco, CA'},
+        {coords: [34.9496, -81.9320], text: 'Spartanburg, SC'},
+        {coords: [41.6528, -83.5379], text: 'Toledo, OH'},
+        {coords: [37.2167, -89.5167], text: 'Unity Point, IL'}
+    ];
+
+    ispCities.forEach(function(city) {
+        L.marker(city.coords, {icon: blueIcon}).addTo(map)
+            .bindPopup('<b>' + city.text + '</b>');
+    });
+
+    // Cities that belong to both By All Means and ISP (two markers: orange and blue)
+    var bothCities = [
+        {coords: [35.0456, -85.3097], text: 'Chattanooga-Hamilton County, TN'},
+        {coords: [42.3918, -71.0328], text: 'Chelsea, MA'},
+        {coords: [37.8044, -122.2711], text: 'Oakland, CA'},
+        {coords: [41.7004, -73.9210], text: 'Poughkeepsie, NY'}
+    ];
+
+    bothCities.forEach(function(city) {
+        L.marker(city.coords, {icon: orangeIcon}).addTo(map)
+            .bindPopup('<b>' + city.text + '</b>');
+        L.marker(city.coords, {icon: blueIcon}).addTo(map)
+            .bindPopup('<b>' + city.text + '</b>');
+    });
     </script>
 </body>
 </html>
-
-
