@@ -52,7 +52,7 @@
 
     bamCities.forEach(function(city) {
         L.marker(city.coords, {icon: defaultMarker}).addTo(map)
-            .bindPopup('<b>' + city.text + '</b>');
+            .bindPopup('<b>' + city.text + '</b><br>By All Means city');
     });
 
     // Institute for Success Planning cities (default markers)
@@ -84,7 +84,7 @@
 
     ispCities.forEach(function(city) {
         L.marker(city.coords, {icon: defaultMarker}).addTo(map)
-            .bindPopup('<b>' + city.text + '</b>');
+            .bindPopup('<b>' + city.text + '</b><br>Institute for Success Planning city');
     });
 
     // Cities that belong to both By All Means and ISP (default markers)
@@ -97,9 +97,10 @@
 
     bothCities.forEach(function(city) {
         L.marker(city.coords, {icon: defaultMarker}).addTo(map)
-            .bindPopup('<b>' + city.text + '</b>');
+            .bindPopup('<b>' + city.text + '</b><br>Both By All Means and Institute for Success Planning city');
     });
     </script>
 </body>
 </html>
+
 
