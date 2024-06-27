@@ -38,7 +38,20 @@
         shadowSize: [41, 41]
     });
 
-    // By All Means cities (default markers)
+    // Function to add a city with an orange circle
+    function addCityWithCircle(coords, text) {
+        L.circle(coords, {
+            color: 'orange',
+            fillColor: '#FFA500',
+            fillOpacity: 0.5,
+            radius: 30000
+        }).addTo(map).bindPopup('<b>' + text + '</b><br>By All Means city');
+
+        L.marker(coords, {icon: defaultMarker}).addTo(map)
+            .bindPopup('<b>' + text + '</b><br>By All Means city');
+    }
+
+    // By All Means cities (with orange circles)
     var bamCities = [
         {coords: [42.3601, -71.0589], text: 'Boston, MA'},
         {coords: [35.0456, -85.3097], text: 'Chattanooga-Hamilton County, TN'},
@@ -51,8 +64,7 @@
     ];
 
     bamCities.forEach(function(city) {
-        L.marker(city.coords, {icon: defaultMarker}).addTo(map)
-            .bindPopup('<b>' + city.text + '</b><br>By All Means city');
+        addCityWithCircle(city.coords, city.text);
     });
 
     // Institute for Success Planning cities (default markers)
@@ -96,8 +108,7 @@
     ];
 
     bothCities.forEach(function(city) {
-        L.marker(city.coords, {icon: defaultMarker}).addTo(map)
-            .bindPopup('<b>' + city.text + '</b><br>Both By All Means and Institute for Success Planning city');
+        addCityWithCircle(city.coords, city.text + ' (Both)');
     });
     </script>
 </body>
