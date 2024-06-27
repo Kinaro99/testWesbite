@@ -40,7 +40,7 @@
 
     // Function to add a city with an orange circle
     function addCityWithCircle(coords, text) {
-        L.circle(coords, {
+        var circle = L.circle(coords, {
             color: 'orange',
             fillColor: '#FFA500',
             fillOpacity: 0.5,
@@ -49,6 +49,8 @@
 
         L.marker(coords, {icon: defaultMarker}).addTo(map)
             .bindPopup('<b>' + text + '</b><br>By All Means city');
+
+        return circle;
     }
 
     // By All Means cities (with orange circles)
@@ -63,8 +65,8 @@
         {coords: [42.3876, -71.0995], text: 'Somerville, MA'}
     ];
 
-    bamCities.forEach(function(city) {
-        addCityWithCircle(city.coords, city.text);
+    var bamCircles = bamCities.map(function(city) {
+        return addCityWithCircle(city.coords, city.text);
     });
 
     // Institute for Success Planning cities (default markers)
@@ -99,7 +101,7 @@
             .bindPopup('<b>' + city.text + '</b><br>Institute for Success Planning city');
     });
 
-    // Cities that belong to both By All Means and ISP (default markers)
+    // Cities that belong to both By All Means and ISP (default markers and orange circles)
     var bothCities = [
         {coords: [35.0456, -85.3097], text: 'Chattanooga-Hamilton County, TN'},
         {coords: [42.3918, -71.0328], text: 'Chelsea, MA'},
@@ -107,11 +109,30 @@
         {coords: [41.7004, -73.9210], text: 'Poughkeepsie, NY'}
     ];
 
-    bothCities.forEach(function(city) {
-        addCityWithCircle(city.coords, city.text + ' (Both)');
+    var bothCircles = bothCities.map(function(city) {
+        return addCityWithCircle(city.coords, city.text + ' (Both)');
     });
+
+    // Function to adjust circle radius based on zoom level
+    function adjustCircleRadius() {
+        var zoomLevel = map.getZoom();
+        var radius = 30000 / Math.pow(2, (zoomLevel - 4));
+        bamCircles.forEach(function(circle) {
+            circle.setRadius(radius);
+        });
+        bothCircles.forEach(function(circle) {
+            circle.setRadius(radius);
+        });
+    }
+
+    // Adjust circle radius on zoomend event
+    map.on('zoomend', adjustCircleRadius);
+
+    // Initial adjustment of circle radius
+    adjustCircleRadius();
     </script>
 </body>
 </html>
+
 
 
