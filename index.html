@@ -38,22 +38,7 @@
         shadowSize: [41, 41]
     });
 
-    // Function to add a city with an orange circle
-    function addCityWithCircle(coords, text) {
-        var circle = L.circle(coords, {
-            color: 'orange',
-            fillColor: '#FFA500',
-            fillOpacity: 0.5,
-            radius: 30000
-        }).addTo(map).bindPopup('<b>' + text + '</b><br>By All Means city');
-
-        L.marker(coords, {icon: defaultMarker}).addTo(map)
-            .bindPopup('<b>' + text + '</b><br>By All Means city');
-
-        return circle;
-    }
-
-    // By All Means cities (with orange circles)
+    // By All Means cities (default markers)
     var bamCities = [
         {coords: [42.3601, -71.0589], text: 'Boston, MA'},
         {coords: [35.0456, -85.3097], text: 'Chattanooga-Hamilton County, TN'},
@@ -65,8 +50,9 @@
         {coords: [42.3876, -71.0995], text: 'Somerville, MA'}
     ];
 
-    var bamCircles = bamCities.map(function(city) {
-        return addCityWithCircle(city.coords, city.text);
+    bamCities.forEach(function(city) {
+        L.marker(city.coords, {icon: defaultMarker}).addTo(map)
+            .bindPopup('<b>' + city.text + '</b><br>By All Means city');
     });
 
     // Institute for Success Planning cities (default markers)
@@ -101,7 +87,7 @@
             .bindPopup('<b>' + city.text + '</b><br>Institute for Success Planning city');
     });
 
-    // Cities that belong to both By All Means and ISP (default markers and orange circles)
+    // Cities that belong to both By All Means and ISP (default markers)
     var bothCities = [
         {coords: [35.0456, -85.3097], text: 'Chattanooga-Hamilton County, TN'},
         {coords: [42.3918, -71.0328], text: 'Chelsea, MA'},
@@ -109,30 +95,12 @@
         {coords: [41.7004, -73.9210], text: 'Poughkeepsie, NY'}
     ];
 
-    var bothCircles = bothCities.map(function(city) {
-        return addCityWithCircle(city.coords, city.text + ' (Both)');
+    bothCities.forEach(function(city) {
+        L.marker(city.coords, {icon: defaultMarker}).addTo(map)
+            .bindPopup('<b>' + city.text + '</b><br>Both By All Means and Institute for Success Planning city');
     });
-
-    // Function to adjust circle radius based on zoom level
-    function adjustCircleRadius() {
-        var zoomLevel = map.getZoom();
-        var radius = 30000 / Math.pow(2, (zoomLevel - 4));
-        bamCircles.forEach(function(circle) {
-            circle.setRadius(radius);
-        });
-        bothCircles.forEach(function(circle) {
-            circle.setRadius(radius);
-        });
-    }
-
-    // Adjust circle radius on zoomend event
-    map.on('zoomend', adjustCircleRadius);
-
-    // Initial adjustment of circle radius
-    adjustCircleRadius();
     </script>
 </body>
 </html>
-
 
 
